@@ -5,6 +5,8 @@ TapkuLibraryDemo/build/**
 *.pbxuser
 *.perspectivev3
 *.mode1v3
+*.xcuserstate
+xcuserdata
 
 # old skool
 .svn
@@ -12,4 +14,3 @@ TapkuLibraryDemo/build/**
 
 # osx noise
 .DS_Store
-#profile
