@@ -41,8 +41,8 @@
 
 - (void) addActiveRequest:(TKHTTPRequest*)request;
 - (void) removeActiveRequest:(TKHTTPRequest*)request;
+- (void) cancelActiveRequests;
 
-- (void) processJSONDataInBackground:(NSData*)data withCallback:(SEL)callback;
-- (void) processJSONDataInBackground:(NSData*)data withCallback:(SEL)callback readingOptions:(NSJSONReadingOptions)options;
+
 
 @end

@@ -41,12 +41,7 @@
 	[super viewDidUnload];
 }
 - (void) dealloc{
-	
-	if(_activeRequests){
-		for(TKHTTPRequest *request in _activeRequests)
-			[request cancel];
-	}
-	
+	[self cancelActiveRequests];
 }
 
 #pragma mark - EASILY MANAGE ACTIVE REQUESTS
@@ -63,21 +58,10 @@
 	if([_activeRequests containsObject:request])
 		[_activeRequests removeObject:request];
 }
-
-
-#pragma mark - PROCESS JSON IN THE BACKGROUND
-- (void) processJSONDataInBackground:(NSData*)data withCallback:(SEL)callback{
-	[self processJSONDataInBackground:data withCallback:callback readingOptions:NSJSONReadingMutableContainers];
-}
-- (void) processJSONDataInBackground:(NSData*)data withCallback:(SEL)callback readingOptions:(NSJSONReadingOptions)options{
-	NSArray *object = [NSArray arrayWithObjects:data,NSStringFromSelector(callback),[NSNumber numberWithUnsignedInt:options], nil];
-	[self performSelectorInBackground:@selector(_processJSONData:) withObject:object];
-}
-- (void) _processJSONData:(NSArray*)array{
-	@autoreleasepool {
-		NSError *error = nil;
-		id object = [NSJSONSerialization JSONObjectWithData:[array firstObject] options:[[array lastObject] unsignedIntValue] error:&error];
-		[self performSelectorOnMainThread:NSSelectorFromString([array objectAtIndex:1]) withObject:object waitUntilDone:NO];
+- (void) cancelActiveRequests{
+	if(_activeRequests){
+		for(TKHTTPRequest *request in _activeRequests)
+			[request cancel];
 	}
 }
 
